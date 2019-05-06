@@ -4,10 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 
 
 @MappedSuperclass
-public abstract class AbstractNamedEntity extends AbstractBaseEntity {
+public abstract class AbstractNamedEntity extends AbstractBaseEntity implements Serializable {
 
     @NotBlank
     @Size(min = 2, max = 100)

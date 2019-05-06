@@ -1,5 +1,7 @@
 package ru.dsstaroverov.lunchMenu.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
@@ -13,6 +15,7 @@ public class Restaurant extends AbstractNamedEntity {
 
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
     @OrderBy("createDate DESC")
+    @JsonIgnore
     private List<Menu> menuList;
 
     public Restaurant() {
@@ -21,5 +24,21 @@ public class Restaurant extends AbstractNamedEntity {
     public Restaurant(String name, String address) {
         this.address = address;
         this.name = name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public List<Menu> getMenuList() {
+        return menuList;
+    }
+
+    public void setMenuList(List<Menu> menuList) {
+        this.menuList = menuList;
     }
 }
