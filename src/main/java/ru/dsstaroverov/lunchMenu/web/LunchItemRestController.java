@@ -9,12 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.dsstaroverov.lunchMenu.model.LunchItem;
-import ru.dsstaroverov.lunchMenu.model.Menu;
 import ru.dsstaroverov.lunchMenu.service.LunchItemService;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = LunchItemRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -28,7 +26,7 @@ public class LunchItemRestController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<LunchItem> create(@Valid @RequestBody LunchItem item) {
-        log.info("create");
+        log.info("create item");
         LunchItem created = lunchItemService.save(item);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -41,15 +39,21 @@ public class LunchItemRestController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void update(@Valid @RequestBody LunchItem item, @PathVariable int id){
-        log.info("update");
+        log.info("update item with id: "+id);
         lunchItemService.update(item,id);
     }
 
+    @GetMapping("/{id}")
+    public LunchItem get(@PathVariable int id) {
+        log.info("get item with id: " + id);
+        return lunchItemService.get(id);
+    }
 
 
-    @GetMapping("/menu/{id}")
-    public List<LunchItem> getAllForMenu(@PathVariable int id){
-        log.info("getAllForMenu");
-        return lunchItemService.getAllForMenu(id);
+    @DeleteMapping("/{id}")
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable int id) {
+        log.info("delete item with id: "+id);
+        lunchItemService.delete(id);
     }
 }

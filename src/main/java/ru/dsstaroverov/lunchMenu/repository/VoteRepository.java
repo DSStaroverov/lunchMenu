@@ -11,9 +11,12 @@ import java.util.List;
 
 @Repository
 public interface VoteRepository extends JpaRepository<Vote,Integer> {
-    @Query("SELECT vote FROM Vote vote WHERE vote.voteDate=:date ORDER BY vote.menu.id DESC")
+
+    Vote findByUserIdAndVoteDate(@Param("userId") int userId, @Param("voteDate") LocalDate voteDate);
+
+    @Query("SELECT vote FROM Vote vote WHERE vote.voteDate=:date ORDER BY vote.menuId DESC")
     List<Vote> findAllForDate(@Param("date") LocalDate date);
 
-    @Query("SELECT vote FROM Vote vote LEFT JOIN FETCH vote.menu WHERE vote.user.id=:userId ORDER BY vote.voteDate DESC")
+    @Query("SELECT vote FROM Vote vote WHERE vote.userId=:userId ORDER BY vote.voteDate DESC")
     List<Vote> findAllForUser(@Param("userId") int userId);
 }

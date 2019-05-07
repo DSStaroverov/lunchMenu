@@ -1,5 +1,6 @@
 package ru.dsstaroverov.lunchMenu.repository;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,13 +15,14 @@ import java.util.List;
 public interface MenuRepository extends JpaRepository<Menu,Integer> {
 
 
-    @Query("SELECT menu FROM Menu menu LEFT JOIN FETCH menu.lunchItems where menu.id=:id")
+    @EntityGraph(attributePaths = {"lunchItems"}, type = EntityGraph.EntityGraphType.FETCH)
+    @Query("SELECT menu FROM Menu menu where menu.id=:id")
     Menu getWithItems(@Param("id") int id);
 
     @Query("SELECT menu FROM Menu menu WHERE menu.createDate=:date")
     List<Menu> findAllByCreateDate(@Param("date") LocalDate date);
 
-    @Query("SELECT menu FROM Menu menu WHERE menu.restaurant.id=:id")
+    @Query("SELECT menu FROM Menu menu WHERE menu.restaurant.id=:id ORDER BY menu.createDate DESC")
     List<Menu> findAllByRestaurant(@Param("id") int id);
 
 }

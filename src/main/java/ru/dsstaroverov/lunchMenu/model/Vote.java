@@ -3,46 +3,44 @@ package ru.dsstaroverov.lunchMenu.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "votes")
 public class Vote extends AbstractBaseEntity {
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    @NotNull
-    private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "menu_id", nullable = false)
+    @Column(name = "user_id")
     @NotNull
-    private Menu menu;
+    private int userId;
+
+    @Column(name = "menu_id")
+    @NotNull
+    private int menuId;
 
     @Column(name = "vote_date")
-    private LocalDate voteDate;
+    private LocalDate voteDate = LocalDate.now();
 
     public Vote() {
     }
 
-    public Vote(@NotNull User user, @NotNull Menu menu) {
-        this.user = user;
-        this.menu = menu;
+    public Vote(@NotNull int userId, @NotNull int menuId) {
+        this.userId = userId;
+        this.menuId = menuId;
     }
 
-    public User getUser() {
-        return user;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public Menu getMenu() {
-        return menu;
+    public int getMenuId() {
+        return menuId;
     }
 
-    public void setMenu(Menu menu) {
-        this.menu = menu;
+    public void setMenuId(int menuId) {
+        this.menuId = menuId;
     }
 
     public LocalDate getVoteDate() {

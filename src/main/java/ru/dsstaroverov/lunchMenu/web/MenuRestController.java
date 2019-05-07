@@ -3,7 +3,6 @@ package ru.dsstaroverov.lunchMenu.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,19 +10,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.dsstaroverov.lunchMenu.model.LunchItem;
 import ru.dsstaroverov.lunchMenu.model.Menu;
-import ru.dsstaroverov.lunchMenu.service.LunchItemService;
 import ru.dsstaroverov.lunchMenu.service.MenuService;
+import ru.dsstaroverov.lunchMenu.service.RestaurantService;
 import ru.dsstaroverov.lunchMenu.to.MenuTo;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
-import java.util.ArrayList;
+
 import java.util.List;
 
-import static org.springframework.format.annotation.DateTimeFormat.ISO.DATE;
 import static ru.dsstaroverov.lunchMenu.util.MenuUtil.asTo;
-import static ru.dsstaroverov.lunchMenu.util.MenuUtil.fromTo;
 
 
 @RestController
@@ -37,10 +34,13 @@ public class MenuRestController {
     @Autowired
     MenuService menuService;
 
+    @Autowired
+    RestaurantService restaurantService;
+
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Menu> create(@Valid @RequestBody MenuTo menu) {
-        log.info("create");
+        log.info("create menu");
         Menu created = menuService.save(menu);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -52,8 +52,8 @@ public class MenuRestController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(@Valid @RequestBody Menu menu, @PathVariable int id){
-        log.info("update");
+    public void update(@Valid @RequestBody MenuTo menu, @PathVariable int id){
+        log.info("update menu id: "+id);
         menuService.update(menu,id);
     }
 
@@ -61,13 +61,13 @@ public class MenuRestController {
 
     @GetMapping("/{id}")
     public MenuTo get(@PathVariable int id) {
-        log.info("get ");
-        Menu menu = menuService.get(id);
-        Integer voteCount=0;
+        log.info("get menu id: "+id);
+        Menu menu = menuService.getWithItems(id);
+
         double totalCalories = menu.getLunchItems().stream().mapToDouble(LunchItem::getCalories).sum();
         MenuTo menuTo = asTo(menu);
         menuTo.setTotalCalories(totalCalories);
-        menuTo.setVoteCount(voteCount);
+
         return menuTo;
     }
 
@@ -75,7 +75,7 @@ public class MenuRestController {
     @GetMapping("/{id}/lunchItems")
     public List<LunchItem> getLunchItems(@PathVariable int id) {
         log.info("getLunchItems for menu id: " + id);
-        return menuService.get(id).getLunchItems();
+        return menuService.getWithItems(id).getLunchItems();
     }
 
     @GetMapping

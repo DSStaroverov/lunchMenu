@@ -9,7 +9,6 @@ import org.springframework.util.Assert;
 import ru.dsstaroverov.lunchMenu.model.LunchItem;
 import ru.dsstaroverov.lunchMenu.repository.LunchItemRepository;
 
-import java.util.List;
 
 import static ru.dsstaroverov.lunchMenu.util.ValidationUtil.checkNotFoundWithId;
 
@@ -35,15 +34,10 @@ public class LunchItemServiceImpl implements LunchItemService {
         lunchItemRepository.save(checkNotFoundWithId(item,id));
     }
 
+    @Cacheable("lunchItems")
     @Override
     public LunchItem get(int id) {
         return lunchItemRepository.findById(id).orElse(null);
-    }
-
-    @Cacheable("lunchItems")
-    @Override
-    public List<LunchItem> getAllForMenu(int id) {
-        return lunchItemRepository.findAllForMenu(id);
     }
 
     @CacheEvict(value = "lunchItems", allEntries = true)

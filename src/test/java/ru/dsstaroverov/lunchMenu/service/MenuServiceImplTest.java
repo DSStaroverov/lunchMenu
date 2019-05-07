@@ -27,7 +27,7 @@ class MenuServiceImplTest extends AbstractTest{
         items.add(new LunchItem("new item 2",300));
         items.add(new LunchItem("new item 3",250));
         items.add(new LunchItem("new item 4",150));
-        MenuTo menu = new MenuTo(null,100005,items, LocalDate.now(),300);
+        MenuTo menu = new MenuTo(null,100005, LocalDate.now(),300);
 
         Menu saved = menuService.save(menu);
 
@@ -35,8 +35,14 @@ class MenuServiceImplTest extends AbstractTest{
     }
 
     @Test
+    void getMenu() {
+        Menu menu = menuService.get(100007);
+        //log.info(menu.toString());
+    }
+
+    @Test
     void getWithItems() {
         Menu menu = menuService.getWithItems(100007);
-        log.info(menu.toString());
+        //log.info(menu.toString());
     }
 }

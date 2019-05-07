@@ -15,7 +15,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static ru.dsstaroverov.lunchMenu.util.MenuUtil.fromTo;
-import static ru.dsstaroverov.lunchMenu.util.ValidationUtil.checkNotFound;
 import static ru.dsstaroverov.lunchMenu.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
@@ -33,7 +32,6 @@ public class MenuServiceImpl implements MenuService {
     @Transactional
     public Menu save(MenuTo menu){
         Assert.notNull(menu,"menu must not be null");
-
         return menuRepository.save(convertTo(menu));
     }
 
@@ -41,9 +39,15 @@ public class MenuServiceImpl implements MenuService {
     @CacheEvict(value = "menus", allEntries = true)
     @Override
     @Transactional
-    public void update(Menu menu, int id) {
+    public void update(MenuTo menu, int id) {
         Assert.notNull(menu,"menu must not be null");
-        menuRepository.save(checkNotFoundWithId(menu,id));
+        Menu updated = checkNotFoundWithId(getWithItems(id),id);
+        updated.setCreateDate(menu.getCreateDate());
+        if(updated.getRestaurant().getId()!=menu.getRestaurant()){
+            updated.setRestaurant(restaurantRepository.findById(menu.getRestaurant()).orElse(null));
+        }
+        updated.setPrice(menu.getPrice());
+        menuRepository.save(updated);
     }
 
     @Cacheable("menus")
@@ -78,7 +82,7 @@ public class MenuServiceImpl implements MenuService {
         Menu deleted = get(id);
         checkNotFoundWithId(deleted,id);
         if(deleted!=null) {
-            menuRepository.delete(get(id));
+            menuRepository.delete(deleted);
         }
     }
 

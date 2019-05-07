@@ -8,39 +8,49 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.dsstaroverov.lunchMenu.model.Vote;
 import ru.dsstaroverov.lunchMenu.repository.VoteRepository;
+import ru.dsstaroverov.lunchMenu.util.exception.EndTimeVotingException;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
-
-import static ru.dsstaroverov.lunchMenu.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
 @Transactional(readOnly = true)
 public class VoteServiceImpl implements VoteService {
+    private final LocalTime endVoting = LocalTime.of(12,00);
+
     @Autowired
     private VoteRepository voteRepository;
 
     @CacheEvict(value = "votes", allEntries = true)
     @Override
     @Transactional
-    public Vote save(Vote vote) {
+    public Vote save(Vote vote, LocalDateTime dateTime) {
         Assert.notNull(vote,"vote must not be null");
-        return voteRepository.save(vote);
+
+        Vote checked = get(vote.getUserId(),dateTime.toLocalDate());
+        if(checked==null){
+            return voteRepository.save(vote);
+        }else{
+            checkTime(dateTime.toLocalTime());
+            checked.setMenuId(vote.getMenuId());
+            return voteRepository.save(checked);
+        }
+
     }
 
-    @CacheEvict(value = "votes", allEntries = true)
-    @Override
-    @Transactional
-    public void update(Vote vote, int id) {
-        Assert.notNull(vote,"vote must not be null");
-        voteRepository.save(checkNotFoundWithId(vote,id));
+    private Vote get(int userId, LocalDate voteDate){
+        return voteRepository.findByUserIdAndVoteDate(userId, voteDate);
     }
 
-    @Cacheable("votes")
-    @Override
-    public Vote get(int id) {
-        return voteRepository.findById(id).orElse(null);
+    private void checkTime(LocalTime time){
+        if(time.isAfter(endVoting)){
+            throw new EndTimeVotingException();
+        }
     }
+
+
 
     @Cacheable("votes")
     @Override
@@ -54,14 +64,4 @@ public class VoteServiceImpl implements VoteService {
         return voteRepository.findAllForUser(userId);
     }
 
-    @CacheEvict(value = "votes", allEntries = true)
-    @Override
-    @Transactional
-    public void delete(int id) {
-        Vote deleted = get(id);
-        checkNotFoundWithId(deleted,id);
-        if(deleted!=null) {
-            voteRepository.delete(get(id));
-        }
-    }
 }

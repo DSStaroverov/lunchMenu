@@ -16,9 +16,9 @@ public class Menu extends AbstractBaseEntity {
     @NotNull
     private Restaurant restaurant;
 
-    @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "menu", fetch = FetchType.LAZY)
     @OrderBy("name DESC")
-    @JsonIgnore
+    //@JsonIgnore
     private List<LunchItem> lunchItems;
 
     @Column(name = "create_date")

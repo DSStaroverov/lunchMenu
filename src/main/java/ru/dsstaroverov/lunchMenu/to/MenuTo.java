@@ -1,23 +1,16 @@
 package ru.dsstaroverov.lunchMenu.to;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import ru.dsstaroverov.lunchMenu.model.LunchItem;
-import ru.dsstaroverov.lunchMenu.model.Restaurant;
+
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 public class MenuTo extends BaseTo{
     private Integer restaurant;
 
-    private List<LunchItem> lunchItems;
-
     private LocalDate createDate;
 
     private double price;
-
-    private Integer voteCount;
 
     private double totalCalories;
 
@@ -25,10 +18,10 @@ public class MenuTo extends BaseTo{
     }
 
 
-    public MenuTo(Integer id,int restaurant, List<LunchItem> lunchItems, LocalDate createDate, double price) {
+    public MenuTo(Integer id,int restaurant, LocalDate createDate, double price) {
         super(id);
         this.restaurant = restaurant;
-        this.lunchItems = lunchItems;
+        //this.lunchItems = lunchItems;
         this.createDate = createDate;
         this.price = price;
     }
@@ -41,13 +34,6 @@ public class MenuTo extends BaseTo{
         this.restaurant = restaurant;
     }
 
-    public List<LunchItem> getLunchItems() {
-        return lunchItems;
-    }
-
-    public void setLunchItems(List<LunchItem> lunchItems) {
-        this.lunchItems = lunchItems;
-    }
 
     public LocalDate getCreateDate() {
         return createDate;
@@ -63,14 +49,6 @@ public class MenuTo extends BaseTo{
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public Integer getVoteCount() {
-        return voteCount;
-    }
-
-    public void setVoteCount(Integer voteCount) {
-        this.voteCount = voteCount;
     }
 
     public double getTotalCalories() {
@@ -104,10 +82,8 @@ public class MenuTo extends BaseTo{
     public String toString() {
         return "MenuTo{" +
                 "restaurant=" + restaurant +
-                ", lunchItems=" + lunchItems +
                 ", createDate=" + createDate +
                 ", price=" + price +
-                ", voteCount=" + voteCount +
                 ", totalCalories=" + totalCalories +
                 '}';
     }
