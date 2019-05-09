@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import ru.dsstaroverov.lunchMenu.model.Menu;
 import ru.dsstaroverov.lunchMenu.model.Restaurant;
 import ru.dsstaroverov.lunchMenu.repository.RestaurantRepository;
 
@@ -45,6 +46,10 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public List<Restaurant> getAll() {
         return restaurantRepository.findAll(Sort.by("name"));
+    }
+
+    public Restaurant getWithMenus(int id){
+        return restaurantRepository.getWithMenus(id);
     }
 
     @CacheEvict(value = "restaurants", allEntries = true)

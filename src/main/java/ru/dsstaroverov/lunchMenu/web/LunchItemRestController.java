@@ -17,7 +17,7 @@ import java.net.URI;
 @RestController
 @RequestMapping(value = LunchItemRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class LunchItemRestController {
-    static final String REST_URL = "/rest/items";
+    static final String REST_URL = "/rest/item";
 
     protected final Logger log = LoggerFactory.getLogger(getClass());
 

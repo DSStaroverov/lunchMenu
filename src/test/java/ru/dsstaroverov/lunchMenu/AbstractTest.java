@@ -1,5 +1,6 @@
 package ru.dsstaroverov.lunchMenu;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,8 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import javax.annotation.PostConstruct;
+
+import java.util.Objects;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
@@ -37,10 +40,10 @@ abstract public class AbstractTest {
     }
 
     protected MockMvc mockMvc;
-/*
+
     @Autowired
     private CacheManager cacheManager;
-*/
+
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -53,12 +56,11 @@ abstract public class AbstractTest {
                 .apply(springSecurity())
                 .build();
     }
-/*
+
     @BeforeEach
     void setUp() {
-        cacheManager.getCache("users").clear();
-        if (jpaUtil != null) {
-            jpaUtil.clear2ndLevelHibernateCache();
-        }
-    }*/
+        Objects.requireNonNull(cacheManager.getCache("users")).clear();
+
+    }
+
 }

@@ -6,6 +6,7 @@ import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequ
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
+import ru.dsstaroverov.lunchMenu.AuthorizedUser;
 import ru.dsstaroverov.lunchMenu.model.User;
 import ru.dsstaroverov.lunchMenu.web.json.JsonUtil;
 

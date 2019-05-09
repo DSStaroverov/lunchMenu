@@ -15,14 +15,20 @@ import static ru.dsstaroverov.lunchMenu.model.AbstractBaseEntity.START_SEQ;
 
 
 public class UserTestData {
-    public static final int USER_ID = START_SEQ;
+    public static final int USER_ID_1 = START_SEQ;
+    public static final int USER_ID_2 = START_SEQ;
+    public static final int USER_ID_3 = START_SEQ;
+    public static final int USER_ID_4 = START_SEQ;
     public static final int ADMIN_ID = START_SEQ + 4;
 
-    public static final User USER = new User(USER_ID, "User", "user@yandex.ru", "password",  Role.ROLE_USER);
+    public static final User USER_1 = new User(USER_ID_1, "User", "user@yandex.ru", "password",  Role.ROLE_USER);
+    public static final User USER_2 = new User(USER_ID_2, "User2", "user2@yandex.ru", "password",  Role.ROLE_USER);
+    public static final User USER_3 = new User(USER_ID_3, "User3", "user3@yandex.ru", "password",  Role.ROLE_USER);
+    public static final User USER_4 = new User(USER_ID_4, "User4", "user4@yandex.ru", "password",  Role.ROLE_USER);
     public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin",  Role.ROLE_ADMIN, Role.ROLE_USER);
 
     public static void assertMatch(User actual, User expected) {
-        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered", "meals", "password");
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered", "password");
     }
 
     public static void assertMatch(Iterable<User> actual, User... expected) {
@@ -30,7 +36,7 @@ public class UserTestData {
     }
 
     public static void assertMatch(Iterable<User> actual, Iterable<User> expected) {
-        assertThat(actual).usingElementComparatorIgnoringFields("registered", "meals", "password").isEqualTo(expected);
+        assertThat(actual).usingElementComparatorIgnoringFields("registered", "password").isEqualTo(expected);
     }
 
     public static ResultMatcher contentJson(User... expected) {

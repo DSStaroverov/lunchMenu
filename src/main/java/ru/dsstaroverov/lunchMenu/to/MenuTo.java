@@ -19,11 +19,15 @@ public class MenuTo extends BaseTo{
 
 
     public MenuTo(Integer id,int restaurant, LocalDate createDate, double price) {
+        this(id,restaurant,createDate,price,0);
+    }
+
+    public MenuTo(Integer id, Integer restaurant, LocalDate createDate, double price, double totalCalories) {
         super(id);
         this.restaurant = restaurant;
-        //this.lunchItems = lunchItems;
         this.createDate = createDate;
         this.price = price;
+        this.totalCalories = totalCalories;
     }
 
     public int getRestaurant() {

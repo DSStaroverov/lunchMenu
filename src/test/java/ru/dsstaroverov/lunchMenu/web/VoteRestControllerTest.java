@@ -13,11 +13,8 @@ import ru.dsstaroverov.lunchMenu.web.json.JsonUtil;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.dsstaroverov.lunchMenu.TestUtil.*;
-import static ru.dsstaroverov.lunchMenu.UserTestData.ADMIN;
-import static ru.dsstaroverov.lunchMenu.UserTestData.USER;
+import static ru.dsstaroverov.lunchMenu.UserTestData.*;
 
 
 class VoteRestControllerTest extends AbstractTest {
@@ -30,9 +27,9 @@ class VoteRestControllerTest extends AbstractTest {
 
     @Test
     void create() throws Exception {
-        Vote vote = new Vote(USER.getId(),100008);
+        Vote vote = new Vote(USER_1.getId(),100008);
         ResultActions action = mockMvc.perform(post(REST_URL+"100008")
-                .with(userHttpBasic(USER))
+                .with(userHttpBasic(USER_1))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(vote)))
                 .andDo(print());

@@ -8,6 +8,7 @@ public interface RestaurantService {
     Restaurant save(Restaurant restaurant);
     void update(Restaurant restaurant, int id);
     Restaurant get(int id);
+    Restaurant getWithMenus(int id);
     List<Restaurant> getAll();
     void delete (int id);
 }

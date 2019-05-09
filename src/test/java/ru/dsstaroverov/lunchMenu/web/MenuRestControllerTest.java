@@ -52,7 +52,7 @@ class MenuRestControllerTest extends AbstractTest {
     @Test
     void getMenu() throws Exception {
         mockMvc.perform(get(REST_URL+"100007")
-                .with(userHttpBasic(USER)))
+                .with(userHttpBasic(USER_1)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
@@ -81,8 +81,8 @@ class MenuRestControllerTest extends AbstractTest {
 
     @Test
     void getMenuItems() throws Exception {
-        mockMvc.perform(get(REST_URL+"100007/lunchItems")
-                .with(userHttpBasic(USER)))
+        mockMvc.perform(get(REST_URL+"100007/items")
+                .with(userHttpBasic(USER_1)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
@@ -92,7 +92,7 @@ class MenuRestControllerTest extends AbstractTest {
     @Test
     void getAllForDayWithoutDate() throws Exception {
         mockMvc.perform(get(REST_URL)
-                .with(userHttpBasic(USER)))
+                .with(userHttpBasic(USER_1)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
@@ -103,20 +103,11 @@ class MenuRestControllerTest extends AbstractTest {
     void getAllForDay() throws Exception {
 
         mockMvc.perform(get(REST_URL)
-                .with(userHttpBasic(USER))
+                .with(userHttpBasic(USER_1))
                 .param("date","2019-04-29"))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
 
-    @Test
-    void getAllForRestaurant() throws Exception {
-        mockMvc.perform(get(REST_URL+"restaurant/100005")
-                .with(userHttpBasic(USER)))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
-
-    }
 }
