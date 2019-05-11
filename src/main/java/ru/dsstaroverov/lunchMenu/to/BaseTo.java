@@ -1,11 +1,10 @@
 package ru.dsstaroverov.lunchMenu.to;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import ru.dsstaroverov.lunchMenu.model.HasId;
 
 public abstract class BaseTo implements HasId {
-    @JsonIgnore
+
     protected Integer id;
 
     public BaseTo() {

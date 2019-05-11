@@ -8,8 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.dsstaroverov.lunchMenu.model.LunchItem;
 import ru.dsstaroverov.lunchMenu.repository.LunchItemRepository;
+import ru.dsstaroverov.lunchMenu.repository.MenuRepository;
+import ru.dsstaroverov.lunchMenu.to.LunchItemTo;
 
-
+import static ru.dsstaroverov.lunchMenu.util.LunchItemUtil.fromTo;
 import static ru.dsstaroverov.lunchMenu.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
@@ -18,20 +20,23 @@ public class LunchItemServiceImpl implements LunchItemService {
     @Autowired
     private LunchItemRepository lunchItemRepository;
 
+    @Autowired
+    private MenuRepository menuRepository;
+
     @CacheEvict(value = "lunchItems", allEntries = true)
     @Override
     @Transactional
-    public LunchItem save(LunchItem item) {
+    public LunchItem save(LunchItemTo item) {
         Assert.notNull(item,"item must not be null");
-        return lunchItemRepository.save(item);
+        return lunchItemRepository.save(convertTo(item));
     }
 
     @CacheEvict(value = "lunchItems", allEntries = true)
     @Override
     @Transactional
-    public void update(LunchItem item, int id) {
+    public void update(LunchItemTo item, int id) {
         Assert.notNull(item,"item must not be null");
-        lunchItemRepository.save(checkNotFoundWithId(item,id));
+        lunchItemRepository.save(checkNotFoundWithId(convertTo(item),id));
     }
 
     @Cacheable("lunchItems")
@@ -49,5 +54,11 @@ public class LunchItemServiceImpl implements LunchItemService {
         if(deleted!=null) {
             lunchItemRepository.delete(get(id));
         }
+    }
+
+    private LunchItem convertTo(LunchItemTo item){
+        LunchItem converted = fromTo(item);
+        converted.setMenu(menuRepository.findById(item.getMenuId()).orElse(null));
+        return converted;
     }
 }

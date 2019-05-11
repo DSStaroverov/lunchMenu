@@ -24,25 +24,25 @@ INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_ADMIN', 100004);
 
 INSERT INTO RESTAURANT(name, address) VALUES
-('Vacabi','Pionerskay st. 25'),
-('TokioCity','Pionerskay st. 12');
+('Vacabi','Pionerskay st. 25'),--100005
+('TokioCity','Pionerskay st. 12');--100006
 
 INSERT INTO MENUS(RESTAURANT_ID, CREATE_DATE,PRICE) VALUES
-(100005,'2019-04-29',200),
-(100006,now,250);
+(100005,'2019-04-29',200),--100007
+(100006,now,250);--100008
 
 INSERT INTO LUNCH_ITEMS(NAME, MENU_ID, CALORIES) VALUES
-('Soap Vasabi Sunday',100007,230),
-('Bread Vasabi Sunday',100007,150),
-('Tea Vasabi Sunday',100007,20),
-('Roll Vasabi Sunday',100007,420),
-('Soap TokioCity Sunday',100008,350),
-('Coffee TokioCity Sunday',100008,10),
-('Udon TokioCity Sunday',100008,550),
-('Roll TokioCity Sunday',100008,280);
+('Soap Vasabi Sunday',100007,230),--100009
+('Bread Vasabi Sunday',100007,150),--100010
+('Tea Vasabi Sunday',100007,20),--100011
+('Roll Vasabi Sunday',100007,420),--100012
+('Soap TokioCity Sunday',100008,350),--100013
+('Coffee TokioCity Sunday',100008,10),--100014
+('Udon TokioCity Sunday',100008,550),--100015
+('Roll TokioCity Sunday',100008,280);--100016
 
 INSERT INTO VOTES(USER_ID, MENU_ID,VOTE_DATE) VALUES
-(100000,100007,now),
-(100001,100007,now),
-(100002,100007,now),
-(100003,100008,now);
+(100000,100007,'2019-04-29'),--100017
+(100001,100007,'2019-04-29'),--100018
+(100002,100007,'2019-04-29'),--100020
+(100003,100008,now);--100021

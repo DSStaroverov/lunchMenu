@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.dsstaroverov.lunchMenu.model.Vote;
 import ru.dsstaroverov.lunchMenu.service.VoteService;
+import ru.dsstaroverov.lunchMenu.to.VoteTo;
 
 import java.net.URI;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 
+import static ru.dsstaroverov.lunchMenu.util.VoteUtil.asTo;
 import static ru.dsstaroverov.lunchMenu.web.SecurityUtil.authUserId;
 
 
@@ -33,10 +34,10 @@ public class VoteRestController {
 
 
     @PostMapping(value ="/{menuId}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Vote> create(@PathVariable int menuId) {
+    public ResponseEntity<VoteTo> create(@PathVariable int menuId) {
         log.info("create vote");
-        Vote created = service.save(new Vote (authUserId(),menuId), LocalDateTime.now());
 
+        VoteTo created = service.save(new Vote(null,authUserId(),menuId));
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();

@@ -23,8 +23,13 @@ public class LunchItem extends AbstractNamedEntity{
     }
 
     public LunchItem(String name,double calories){
-        super(null,name);
-        this.calories = calories;
+        this(null,name,null,calories);
+    }
+
+    public LunchItem(Integer id, String name, Menu menu, double calories){
+        super(id,name);
+        this.menu=menu;
+        this.calories=calories;
     }
 
     public Menu getMenu() {
@@ -48,6 +53,7 @@ public class LunchItem extends AbstractNamedEntity{
         return "LunchItem{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+               // ", menu='" + menu + '\'' +
                 ", calories=" + calories +
                 '}';
     }

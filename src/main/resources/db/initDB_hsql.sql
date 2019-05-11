@@ -64,7 +64,7 @@ CREATE TABLE votes
   user_id          INTEGER                 NOT NULL,
   menu_id          INTEGER                 NOT NULL,
   vote_date        DATE DEFAULT now() NOT NULL,
-  CONSTRAINT user_menus_vote_idx UNIQUE (user_id, menu_id),
+  CONSTRAINT user_vote_date_idx UNIQUE (user_id, vote_date),
   FOREIGN KEY (user_id) REFERENCES USERS (id) ON DELETE CASCADE,
   FOREIGN KEY (menu_id) REFERENCES MENUS (id) ON DELETE CASCADE
 );

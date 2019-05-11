@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.dsstaroverov.lunchMenu.model.LunchItem;
 import ru.dsstaroverov.lunchMenu.service.LunchItemService;
+import ru.dsstaroverov.lunchMenu.to.LunchItemTo;
 
 import javax.validation.Valid;
 import java.net.URI;
@@ -25,7 +26,7 @@ public class LunchItemRestController {
     LunchItemService lunchItemService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<LunchItem> create(@Valid @RequestBody LunchItem item) {
+    public ResponseEntity<LunchItem> create(@Valid @RequestBody LunchItemTo item) {
         log.info("create item");
         LunchItem created = lunchItemService.save(item);
 
@@ -38,7 +39,7 @@ public class LunchItemRestController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(@Valid @RequestBody LunchItem item, @PathVariable int id){
+    public void update(@Valid @RequestBody LunchItemTo item, @PathVariable int id){
         log.info("update item with id: "+id);
         lunchItemService.update(item,id);
     }

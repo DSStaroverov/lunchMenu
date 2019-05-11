@@ -1,11 +1,12 @@
 package ru.dsstaroverov.lunchMenu.service;
 
 import ru.dsstaroverov.lunchMenu.model.LunchItem;
+import ru.dsstaroverov.lunchMenu.to.LunchItemTo;
 
 
 public interface LunchItemService {
-    LunchItem save(LunchItem menu);
-    void update(LunchItem menu, int id);
+    LunchItem save(LunchItemTo item);
+    void update(LunchItemTo item, int id);
     LunchItem get(int id);
     void delete(int id);
 }

@@ -8,17 +8,20 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.dsstaroverov.lunchMenu.model.Vote;
 import ru.dsstaroverov.lunchMenu.repository.VoteRepository;
+import ru.dsstaroverov.lunchMenu.to.VoteTo;
 import ru.dsstaroverov.lunchMenu.util.exception.EndTimeVotingException;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+
+import static ru.dsstaroverov.lunchMenu.util.VoteUtil.asTo;
+import static ru.dsstaroverov.lunchMenu.web.SecurityUtil.authUserId;
 
 @Service
 @Transactional(readOnly = true)
 public class VoteServiceImpl implements VoteService {
-    private final LocalTime endVoting = LocalTime.of(12,00);
+    private final LocalTime endVoting = LocalTime.of(23,59);
 
     @Autowired
     private VoteRepository voteRepository;
@@ -26,18 +29,30 @@ public class VoteServiceImpl implements VoteService {
     @CacheEvict(value = "votes", allEntries = true)
     @Override
     @Transactional
-    public Vote save(Vote vote, LocalDateTime dateTime) {
+    public VoteTo save(Vote vote) {
         Assert.notNull(vote,"vote must not be null");
 
-        Vote checked = get(vote.getUserId(),dateTime.toLocalDate());
+        checkMenuDate(vote.getMenuId());
+        checkTime(LocalTime.now());
+        Vote checked = get(authUserId(),LocalDate.now());
+        VoteTo returned;
         if(checked==null){
-            return voteRepository.save(vote);
-        }else{
-            checkTime(dateTime.toLocalTime());
-            checked.setMenuId(vote.getMenuId());
-            return voteRepository.save(checked);
-        }
+            returned = asTo(voteRepository.save(vote));
 
+        }else{
+            checked.setMenuId(vote.getMenuId());
+            returned = asTo(voteRepository.save(checked));
+        }
+        returned.setCount(getMenuVoteCount(returned.getMenuId()));
+        return returned;
+    }
+
+    private void checkMenuDate(int menuId) {
+        LocalDate checked =voteRepository.getMenuDate(menuId);
+        System.out.println(checked.toString());
+        if(!checked.isEqual(LocalDate.now())){
+            throw new EndTimeVotingException();
+        }
     }
 
     private Vote get(int userId, LocalDate voteDate){
@@ -64,4 +79,6 @@ public class VoteServiceImpl implements VoteService {
         return voteRepository.findAllForUser(userId);
     }
 
+
+    public Integer getMenuVoteCount(int menuId){return voteRepository.voteCount(menuId);}
 }

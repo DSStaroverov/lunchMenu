@@ -19,4 +19,10 @@ public interface VoteRepository extends JpaRepository<Vote,Integer> {
 
     @Query("SELECT vote FROM Vote vote WHERE vote.userId=:userId ORDER BY vote.voteDate DESC")
     List<Vote> findAllForUser(@Param("userId") int userId);
+
+    @Query("SELECT COUNT (vote) FROM Vote vote WHERE vote.menuId=:menuId")
+    Integer voteCount(@Param("menuId") int menuId);
+
+    @Query("SELECT menu.createDate FROM Menu menu WHERE  menu.id=:menuId")
+    LocalDate getMenuDate(@Param("menuId") int menuId);
 }

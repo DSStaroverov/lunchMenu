@@ -16,9 +16,9 @@ import static ru.dsstaroverov.lunchMenu.model.AbstractBaseEntity.START_SEQ;
 
 public class UserTestData {
     public static final int USER_ID_1 = START_SEQ;
-    public static final int USER_ID_2 = START_SEQ;
-    public static final int USER_ID_3 = START_SEQ;
-    public static final int USER_ID_4 = START_SEQ;
+    public static final int USER_ID_2 = START_SEQ+1;
+    public static final int USER_ID_3 = START_SEQ+2;
+    public static final int USER_ID_4 = START_SEQ+3;
     public static final int ADMIN_ID = START_SEQ + 4;
 
     public static final User USER_1 = new User(USER_ID_1, "User", "user@yandex.ru", "password",  Role.ROLE_USER);

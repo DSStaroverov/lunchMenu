@@ -22,7 +22,8 @@ public class Vote extends AbstractBaseEntity {
     public Vote() {
     }
 
-    public Vote(@NotNull int userId, @NotNull int menuId) {
+    public Vote(Integer id,@NotNull int userId, @NotNull int menuId) {
+        super(id);
         this.userId = userId;
         this.menuId = menuId;
     }
@@ -49,5 +50,15 @@ public class Vote extends AbstractBaseEntity {
 
     public void setVoteDate(LocalDate voteDate) {
         this.voteDate = voteDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Vote{" +
+                "userId=" + userId +
+                ", menuId=" + menuId +
+                ", voteDate=" + voteDate +
+                ", id=" + id +
+                '}';
     }
 }
