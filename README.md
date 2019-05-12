@@ -1,6 +1,6 @@
-##Design and implement a REST API using Hibernate/Spring/SpringMVC (or Spring-Boot) without frontend.
+## Design and implement a REST API using Hibernate/Spring/SpringMVC (or Spring-Boot) without frontend.
 
-####The task is:
+#### The task is:
 
     Build a voting system for deciding where to have lunch.
 
@@ -16,29 +16,30 @@
 
 
 
-##Example cURL commands:
+## Example cURL commands:
 
-###Votes:
+### Votes:
 
-#####Create vote:
+##### Create vote:
     curl --location --request POST "http://localhost:8080/lunchMenu/rest/vote/100008" \
     --header "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=" \
     --header "Content-Type: application/json" \
     --data ""
   
-#####Get all votes for day(without date get for today):
+##### Get all votes for day(without date get for today):
     curl --location --request GET "http://localhost:8080/lunchMenu/rest/vote/?date=2019-04-29" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
 
 
-#####Get all authorized user`s votes:
+##### Get all authorized user votes:
     curl --location --request GET "http://localhost:8080/lunchMenu/rest/vote/user" \
     --header "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ="
-  
-***
-###Menus:
 
-#####Create new menu:
+***
+
+### Menus:
+
+##### Create new menu:
     curl --location --request POST "http://localhost:8080/lunchMenu/rest/menu/" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu" \
     --header "Content-Type: application/json" \
@@ -50,7 +51,7 @@
         \"totalCalories\": 0
     }"
 
-#####Update menu:
+##### Update menu:
     curl --location --request PUT "http://localhost:8080/lunchMenu/rest/menu/100007" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu" \
     --header "Content-Type: application/json" \
@@ -62,27 +63,27 @@
         \"totalCalories\": 0
     }"
 
-#####Delete menu:
+##### Delete menu:
     curl --location --request DELETE "http://localhost:8080/lunchMenu/rest/menu/100008" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
 
-#####Get one menu:
+##### Get one menu:
     curl --location --request GET "http://localhost:8080/lunchMenu/rest/menu/100007" \
     --header "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ="
   
-#####Get all menu for day (without date get for today):
+##### Get all menu for day (without date get for today):
     curl --location --request GET "http://localhost:8080/lunchMenu/rest/menu/?date=2019-04-29" \
     --header "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ="
   
-#####Get list menu`s lunch items:
+##### Get list menu lunch items:
     curl --location --request GET "http://localhost:8080/lunchMenu/rest/menu/100007/items" \
     --header "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ="
   
   
 ***  
-###Restaurants:
+### Restaurants:
 
-#####Create new restaurant:
+##### Create new restaurant:
     curl --location --request POST "http://localhost:8080/lunchMenu/rest/restaurant" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu" \
     --header "Content-Type: application/json" \
@@ -92,7 +93,7 @@
         \"address\": \"Pionerskay st. 33\"
     }"
 
-#####Update restaurant:
+##### Update restaurant:
     curl --location --request PUT "http://localhost:8080/lunchMenu/rest/restaurant/100005" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu" \
     --header "Content-Type: application/json" \
@@ -102,19 +103,19 @@
         \"address\": \"Pionerskay st. 25\"
     }"
 
-#####Delete restaurant:
+##### Delete restaurant:
     curl --location --request DELETE "http://localhost:8080/lunchMenu/rest/restaurant/100006" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
   
-#####Get one restaurant:
+##### Get one restaurant:
     curl --location --request GET "http://localhost:8080/lunchMenu/rest/restaurant/100005" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
   
-#####Get restaurant`s menus:
+##### Get restaurant menus:
     curl --location --request GET "http://localhost:8080/lunchMenu/rest/restaurant/100005/menus" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
   
-#####Get all restaurant:
+##### Get all restaurant:
     curl --location --request GET "http://localhost:8080/lunchMenu/rest/restaurant" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
   
@@ -132,7 +133,7 @@
         \"menuId\": 100007
     }"
 
-#####Update lunch item:
+##### Update lunch item:
     curl --location --request PUT "http://localhost:8080/lunchMenu/rest/item/100009" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu" \
     --header "Content-Type: application/json" \
@@ -143,18 +144,18 @@
         \"menuId\": 100007
     }"
 
-#####Delete lunch item:
+##### Delete lunch item:
     curl --location --request DELETE "http://localhost:8080/lunchMenu/rest/item/100009" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
   
-#####Get lunch item:
+##### Get lunch item:
     curl --location --request GET "http://localhost:8080/lunchMenu/rest/item/100009" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
   
 ***
-###Users:
+### Users:
 
-#####Create new user:
+##### Create new user:
     curl --location --request POST "http://localhost:8080/lunchMenu/rest/user/" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu" \
     --header "Content-Type: application/json" \
@@ -170,7 +171,7 @@
         ]
     }"
 
-#####Update user:
+##### Update user:
     curl --location --request PUT "http://localhost:8080/lunchMenu/rest/user/100003" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu" \
     --header "Content-Type: application/json" \
@@ -186,19 +187,19 @@
         ]
     }"
 
-#####Delete user:
+##### Delete user:
     curl --location --request DELETE "http://localhost:8080/lunchMenu/rest/user/100003" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
   
-#####Get user:
+##### Get user:
     curl --location --request GET "http://localhost:8080/lunchMenu/rest/user/100000" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
   
-#####Get all users:
+##### Get all users:
     curl --location --request GET "http://localhost:8080/lunchMenu/rest/user/" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
   
-#####Get user by e-mail:
+##### Get user by e-mail:
     curl --location --request GET "http://localhost:8080/lunchMenu/rest/user/by?email=user@yandex.ru" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
   
