@@ -66,7 +66,7 @@ class RestaurantRestControllerTest extends AbstractTest {
     @Test
     void getRestaurantMenus() throws Exception {
         mockMvc.perform(get(REST_URL+"100005/menus")
-                .with(userHttpBasic(USER_1)))
+                .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
