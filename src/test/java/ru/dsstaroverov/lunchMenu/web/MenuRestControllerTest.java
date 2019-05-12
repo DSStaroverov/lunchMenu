@@ -74,7 +74,11 @@ class MenuRestControllerTest extends AbstractTest {
     }
 
     @Test
-    void delete() {
+    void deleteMenu() throws Exception {
+        mockMvc.perform(delete(REST_URL+"100007")
+            .with(userHttpBasic(ADMIN)))
+                .andDo(print())
+                .andExpect(status().isNoContent());
 
     }
 

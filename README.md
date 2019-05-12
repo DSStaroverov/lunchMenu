@@ -1,3 +1,5 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d15c13e3ad064016887f199a0efc6c24)](https://www.codacy.com/app/DSStaroverov/lunchMenu?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DSStaroverov/lunchMenu&amp;utm_campaign=Badge_Grade)
+
 ## Design and implement a REST API using Hibernate/Spring/SpringMVC (or Spring-Boot) without frontend.
 
 #### The task is:
