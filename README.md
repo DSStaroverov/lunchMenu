@@ -120,9 +120,9 @@
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
   
 ***  
-###Lunch items:
+### Lunch items:
 
-#####Create new lunch item for menu:
+##### Create new lunch item for menu:
     curl --location --request POST "http://localhost:8080/lunchMenu/rest/item/" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu" \
     --header "Content-Type: application/json" \
