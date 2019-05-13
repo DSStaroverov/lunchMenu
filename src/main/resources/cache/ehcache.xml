@@ -7,28 +7,15 @@
 
     <!--<persistence directory="${user.home}/cache-data"/>-->
 
-    <cache-template name="expiryCache">
-        <expiry>
-            <ttl unit="minutes">5</ttl>
-        </expiry>
-        <heap unit="entries">5000</heap>
-    </cache-template>
-
-    <cache-template name="singleNonExpiryCache">
-        <expiry>
-            <none/>
-        </expiry>
-        <heap>1</heap>
-    </cache-template>
 
 
     <!-- -->
-    <!--<cache-template name="users">-->
-        <!--<expiry>-->
-            <!--<ttl unit="minutes">5</ttl>-->
-        <!--</expiry>-->
-        <!--<heap>5000</heap>-->
-    <!--</cache-template>-->
+    <cache-template name="users">
+        <expiry>
+            <ttl unit="minutes">5</ttl>
+        </expiry>
+        <heap>5000</heap>
+    </cache-template>
 
     <cache-template name="menus">
         <expiry>
@@ -59,7 +46,7 @@
     </cache-template>
 
 
-    <cache alias="users" uses-template="singleNonExpiryCache"/>
+    <cache alias="users" uses-template="users"/>
     <cache alias="menus" uses-template="menus"/>
     <cache alias="restaurants" uses-template="restaurants"/>
     <cache alias="lunchItems" uses-template="lunchItems"/>

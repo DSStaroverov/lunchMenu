@@ -3,6 +3,7 @@ package ru.dsstaroverov.lunchMenu.web;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import ru.dsstaroverov.lunchMenu.AuthorizedUser;
+import ru.dsstaroverov.lunchMenu.model.Role;
 
 import static java.util.Objects.requireNonNull;
 
@@ -28,5 +29,9 @@ public class SecurityUtil {
 
     public static int authUserId() {
         return get().getId();
+    }
+
+    public static boolean isAdmin(){
+        return get().getUser().getRoles().contains(Role.ROLE_ADMIN);
     }
 }

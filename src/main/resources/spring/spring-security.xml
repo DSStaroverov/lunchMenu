@@ -12,7 +12,7 @@
         <intercept-url pattern="/rest/menu/**" access="hasRole('ROLE_ADMIN')" method="PUT"/>
         <intercept-url pattern="/rest/menu/**" access="hasRole('ROLE_ADMIN')" method="DELETE"/>
 
-        <intercept-url pattern="/rest/user/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/rest/user/**" access="isAuthenticated()"/>
 
         <intercept-url pattern="/rest/items/**" access="hasRole('ROLE_ADMIN')"/>
 

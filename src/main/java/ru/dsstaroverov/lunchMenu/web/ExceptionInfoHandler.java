@@ -7,6 +7,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -29,6 +30,12 @@ import static ru.dsstaroverov.lunchMenu.util.exception.ErrorType.*;
 @Order(Ordered.HIGHEST_PRECEDENCE + 5)
 public class ExceptionInfoHandler {
     private static Logger log = LoggerFactory.getLogger(ExceptionInfoHandler.class);
+
+    @ResponseStatus(value = HttpStatus.FORBIDDEN)  //403
+    @ExceptionHandler(AccessDeniedException.class)
+    public ErrorInfo accessDeniedError(HttpServletRequest req, Exception e) {
+        return logAndGetErrorInfo(req, e, false, ACCESS_IS_DENIED);
+    }
 
     //  http://stackoverflow.com/a/22358422/548473
     @ResponseStatus(value = HttpStatus.UNPROCESSABLE_ENTITY)
