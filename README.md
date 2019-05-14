@@ -22,7 +22,7 @@
 
 ### Votes:
 
-##### Create vote:
+##### Create vote for authorized user:
     curl --location --request POST "http://localhost:8080/lunchMenu/rest/vote/100008" \
     --header "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=" \
     --header "Content-Type: application/json" \
@@ -41,7 +41,7 @@
 
 ### Menus:
 
-##### Create new menu:
+##### Create new menu(only admin):
     curl --location --request POST "http://localhost:8080/lunchMenu/rest/menu/" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu" \
     --header "Content-Type: application/json" \
@@ -53,7 +53,7 @@
         \"totalCalories\": 0
     }"
 
-##### Update menu:
+##### Update menu(only admin):
     curl --location --request PUT "http://localhost:8080/lunchMenu/rest/menu/100007" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu" \
     --header "Content-Type: application/json" \
@@ -65,7 +65,7 @@
         \"totalCalories\": 0
     }"
 
-##### Delete menu:
+##### Delete menu(only admin):
     curl --location --request DELETE "http://localhost:8080/lunchMenu/rest/menu/100008" \
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
 
@@ -83,7 +83,7 @@
   
   
 ***  
-### Restaurants:
+### Restaurants(only admin):
 
 ##### Create new restaurant:
     curl --location --request POST "http://localhost:8080/lunchMenu/rest/restaurant" \
@@ -122,7 +122,7 @@
     --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu"
   
 ***  
-### Lunch items:
+### Lunch items(only admin):
 
 ##### Create new lunch item for menu:
     curl --location --request POST "http://localhost:8080/lunchMenu/rest/item/" \
@@ -157,36 +157,24 @@
 ***
 ### Users:
 
-##### Create new user:
-    curl --location --request POST "http://localhost:8080/lunchMenu/rest/user/" \
-    --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu" \
-    --header "Content-Type: application/json" \
-    --data "{
-        \"id\": null,
+##### Create new user(only anonymous):
+    curl --location --request POST "http://localhost:8080/lunchMenu/rest/user/register" \
+      --header "Content-Type: application/json" \
+      --data "{
         \"name\": \"UserNew\",
         \"email\": \"usernew@yandex.ru\",
-        \"password\": \"password\",
-        \"enabled\": true,
-        \"registered\": null,
-        \"roles\": [
-            \"ROLE_USER\"
-        ]
+        \"password\": \"password\"
     }"
 
 ##### Update user:
-    curl --location --request PUT "http://localhost:8080/lunchMenu/rest/user/100003" \
-    --header "Authorization: Basic YWRtaW5AZ21haWwuY29tOmFkbWlu" \
-    --header "Content-Type: application/json" \
-    --data "{
-        \"id\": 100003,
+    curl --location --request PUT "http://localhost:8080/lunchMenu/rest/user/100000" \
+      --header "Authorization: Basic dXNlckB5YW5kZXgucnU6cGFzc3dvcmQ=" \
+      --header "Content-Type: application/json" \
+      --data "{
+        \"id\": 100000,
         \"name\": \"UserUpdate\",
         \"email\": \"userupdate@yandex.ru\",
-        \"password\": \"update\",
-        \"enabled\": true,
-        \"registered\": null,
-        \"roles\": [
-            \"ROLE_USER\"
-        ]
+        \"password\": \"update\"
     }"
 
 ##### Delete user:

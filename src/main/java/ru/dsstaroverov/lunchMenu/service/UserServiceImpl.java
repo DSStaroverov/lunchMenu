@@ -13,10 +13,12 @@ import org.springframework.util.StringUtils;
 import ru.dsstaroverov.lunchMenu.AuthorizedUser;
 import ru.dsstaroverov.lunchMenu.model.User;
 import ru.dsstaroverov.lunchMenu.repository.UserRepository;
+import ru.dsstaroverov.lunchMenu.to.UserTo;
 import ru.dsstaroverov.lunchMenu.util.exception.NotFoundException;
 
 import java.util.List;
 
+import static ru.dsstaroverov.lunchMenu.util.UserUtil.updateFromTo;
 import static ru.dsstaroverov.lunchMenu.util.ValidationUtil.checkNotFound;
 import static ru.dsstaroverov.lunchMenu.util.ValidationUtil.checkNotFoundWithId;
 
@@ -70,6 +72,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public void update(User user) {
         Assert.notNull(user, "user must not be null");
         checkNotFoundWithId(repository.save(prepareToSave(user, passwordEncoder)), user.getId());
+    }
+
+    @Override
+    public void update(UserTo user) {
+        Assert.notNull(user, "user must not be null");
+        User updated = get(user.getId());
+        checkNotFoundWithId(repository.save(prepareToSave(updateFromTo(updated,user), passwordEncoder)), user.getId());
     }
 
     @CacheEvict(value = "users", allEntries = true)

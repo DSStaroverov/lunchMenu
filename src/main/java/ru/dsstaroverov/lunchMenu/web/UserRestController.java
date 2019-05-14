@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.dsstaroverov.lunchMenu.model.User;
 import ru.dsstaroverov.lunchMenu.service.UserService;
+import ru.dsstaroverov.lunchMenu.to.UserTo;
 import ru.dsstaroverov.lunchMenu.util.exception.IllegalRequestDataException;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+import static ru.dsstaroverov.lunchMenu.util.UserUtil.newFromTo;
 import static ru.dsstaroverov.lunchMenu.util.ValidationUtil.assureIdConsistent;
 import static ru.dsstaroverov.lunchMenu.web.SecurityUtil.*;
 
@@ -55,17 +57,16 @@ public class UserRestController {
 
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> create(@Valid @RequestBody User user) {
-        if (isAdmin()) {
+    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> create(@Valid @RequestBody UserTo user) {
+
             log.info("create user");
-            User created = userService.create(user);
+            User created = userService.create(newFromTo(user));
             URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                     .path(REST_URL + "/{id}")
                     .buildAndExpand(created.getId()).toUri();
             return ResponseEntity.created(uriOfNewResource).body(created);
-        }
-        throw new AccessDeniedException("");
+
     }
 
 
@@ -76,16 +77,15 @@ public class UserRestController {
             log.info("delete user with id={}", id);
             userService.delete(id);
         }else {
-            SecurityUtil.get().getUser().setEnabled(false);
             log.info("user with id={} set enabled false", authUserId());
-            userService.update(SecurityUtil.get().getUser());
+            userService.enable(authUserId(),false);
         }
     }
 
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(@Valid @RequestBody User user, @PathVariable int id) {
+    public void update(@Valid @RequestBody UserTo user, @PathVariable int id) {
         try {
             if (isAdmin()) {
                 log.info("update {} with id={}", user, id);

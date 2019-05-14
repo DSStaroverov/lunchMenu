@@ -4,6 +4,7 @@ package ru.dsstaroverov.lunchMenu.service;
 
 
 import ru.dsstaroverov.lunchMenu.model.User;
+import ru.dsstaroverov.lunchMenu.to.UserTo;
 import ru.dsstaroverov.lunchMenu.util.exception.NotFoundException;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public interface UserService {
 
     void update(User user);
 
-    //void update(UserTo user);
+    void update(UserTo user);
 
     List<User> getAll();
 
