@@ -21,7 +21,7 @@ import static ru.dsstaroverov.lunchMenu.web.SecurityUtil.authUserId;
 @Service
 @Transactional(readOnly = true)
 public class VoteServiceImpl implements VoteService {
-    private final LocalTime endVoting = LocalTime.of(23,59);
+    private final LocalTime endVoting = LocalTime.of(11,00);
 
     @Autowired
     private VoteRepository voteRepository;
