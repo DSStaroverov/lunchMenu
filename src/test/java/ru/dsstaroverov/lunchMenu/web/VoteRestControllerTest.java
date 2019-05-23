@@ -10,6 +10,7 @@ import ru.dsstaroverov.lunchMenu.service.VoteService;
 import ru.dsstaroverov.lunchMenu.to.VoteTo;
 import ru.dsstaroverov.lunchMenu.web.json.JsonUtil;
 
+import java.time.LocalTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -32,17 +33,19 @@ class VoteRestControllerTest extends AbstractTest {
 
     @Test
     void create() throws Exception {
-        Vote vote = new Vote(null,USER_1.getId(),100008);
-        ResultActions action = mockMvc.perform(post(REST_URL+"100008")
-                .with(userHttpBasic(USER_1))
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(vote)))
-                .andDo(print());
+        if(LocalTime.now().isBefore(LocalTime.of(11,00))){
+            Vote vote = new Vote(null,USER_1.getId(),100008);
+            ResultActions action = mockMvc.perform(post(REST_URL+"100008")
+                    .with(userHttpBasic(USER_1))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(JsonUtil.writeValue(vote)))
+                    .andDo(print());
 
-        VoteTo returned = readFromJson(action, VoteTo.class);
-        vote.setId(returned.getId());
+            VoteTo returned = readFromJson(action, VoteTo.class);
+            vote.setId(returned.getId());
 
-        assertThat(fromTo(returned)).isEqualTo(vote);
+            assertThat(fromTo(returned)).isEqualTo(vote);
+        }
     }
 
     @Test
